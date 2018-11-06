@@ -10,9 +10,9 @@ import Foundation
 
 
 struct MovieEntity {
-    var name:String
-    var date:String
-    var description:String
+    var name:String?
+    var date:String?
+    var description:String?
     
     mutating func setMovieName(name:String) {
         self.name = name
@@ -28,15 +28,15 @@ struct MovieEntity {
     
     
     func getMovieName() -> String {
-        return self.name
+        return self.name ?? ""
     }
     
     func getMovieDate() -> String {
-        return self.date
+        return self.date ?? ""
     }
     
     func getMovieDescription() -> String {
-        return self.description
+        return self.description ?? ""
     }
     
 }

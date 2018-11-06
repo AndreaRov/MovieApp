@@ -10,19 +10,13 @@ import UIKit
 
 class MoviesListTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var movieCover: UIImageView!
-    @IBOutlet weak var movieTitle: UILabel!
-    @IBOutlet weak var movieDate: UILabel!
-    @IBOutlet weak var movieDescription: UILabel!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    @IBOutlet weak private var movieCover: UIImageView!
+    @IBOutlet weak private var movieTitle: UILabel!
+    @IBOutlet weak private var movieDate: UILabel!
+    @IBOutlet weak private var movieDescription: UILabel!
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     

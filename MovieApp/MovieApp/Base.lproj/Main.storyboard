@@ -100,7 +100,7 @@
                     <navigationItem key="navigationItem" id="Clo-bA-fsc"/>
                     <connections>
                         <outlet property="moviesTableView" destination="Ma0-Vj-4Gp" id="fL7-O0-uVZ"/>
-                        <segue destination="73b-6j-w0P" kind="showDetail" id="yDd-pN-JyB"/>
+                        <segue destination="73b-6j-w0P" kind="showDetail" identifier="MoviesListToDetail" id="yDd-pN-JyB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uWB-hJ-COx" userLabel="First Responder" sceneMemberID="firstResponder"/>
