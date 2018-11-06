@@ -63,15 +63,15 @@ extension MoviesListPresenter: MoviesListPresenterDelegate {
     }
     
     func getCellMovieTitle(indexPath: IndexPath) -> String {
-        return self.arrMovie[indexPath.row].getMovieName()
+        return self.arrMovie[indexPath.row].name ?? ""
     }
     
     func getCellMovieDate(indexPath: IndexPath) -> String {
-        return self.arrMovie[indexPath.row].getMovieDate()
+        return self.arrMovie[indexPath.row].date ?? ""
     }
     
     func getCellMovieDescription(indexPath: IndexPath) -> String {
-        return self.arrMovie[indexPath.row].getMovieDescription()
+        return self.arrMovie[indexPath.row].description ?? ""
     }
 
     
