@@ -9,16 +9,17 @@
 import Foundation
 
 protocol TheMovieDataBaseAPIClientProtocol {
-    func read<T: APIRequest>(_ request: T, _ decodable: DecodableType, completion: @escaping (Transaction<[Any]>) -> Void)
+    func read<T: APIRequest>(_ request: T, _ decodable: DecodableType, completion: @escaping (Transaction<Any>) -> Void)
 }
 
 enum DecodableType {
     case PopularMoviesResponseEntity
+    case MovieDetailsEntity
 }
 
 class TheMovieDataBaseAPIClient: TheMovieDataBaseAPIClientProtocol {
     
-    internal func read<T: APIRequest>(_ request: T, _ decodable: DecodableType, completion: @escaping (Transaction<[Any]>) -> Void) {
+    internal func read<T: APIRequest>(_ request: T, _ decodable: DecodableType, completion: @escaping (Transaction<Any>) -> Void) {
         let jsonDec = JSONDecoder()
         if let baseUrlUnwrapped = URL(string: request.resourceName) {
             URLSession.shared.dataTask(with: baseUrlUnwrapped) { (data, response, error) in
@@ -37,6 +38,7 @@ class TheMovieDataBaseAPIClient: TheMovieDataBaseAPIClientProtocol {
                     } else if httpResponse.statusCode == 200 {
                         //TODO: Si hay distintas request, cambiará el Decodable.Protocol
                         switch decodable {
+                            
                         case .PopularMoviesResponseEntity:
                             let popularMovies = try? jsonDec.decode(PopularMoviesResponseEntity.self, from: data!)
                             //TODO: Delete this print
@@ -48,6 +50,14 @@ class TheMovieDataBaseAPIClient: TheMovieDataBaseAPIClientProtocol {
                                 completion(Transaction.fail(TransactionError.entityUnwrappedFails))
                             }
                             
+                        case .MovieDetailsEntity:
+                            let detailsMovies = try? jsonDec.decode(MovieDetailsEntity.self, from: data!)
+                            
+                            if let detailsMoviesUnwrapped = detailsMovies {
+                                completion(Transaction.sucess(detailsMoviesUnwrapped))
+                            } else {
+                                completion(Transaction.fail(TransactionError.entityUnwrappedFails))
+                            }
                         }
                       
                         

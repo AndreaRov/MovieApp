@@ -9,11 +9,12 @@
 import Foundation
 
 protocol MovieServiceProtocol {
-    func getPopularMovies(completion: @escaping (Transaction<[PopularMovieEntity]>) -> Void)
+    func getCurrentPopularMovies(completion: @escaping (Transaction<[PopularMovieEntity]>) -> Void)
+    func getMovieDetails(movieId: Int, completion: @escaping (Transaction<MovieDetailsEntity>) -> Void)
 }
 
 class MovieService: MovieServiceProtocol {
-    
+
     let apiClient: TheMovieDataBaseAPIClientProtocol
     
     init(apiClient: TheMovieDataBaseAPIClient) {
@@ -21,7 +22,7 @@ class MovieService: MovieServiceProtocol {
     }
     
     
-    func getPopularMovies(completion: @escaping (Transaction<[PopularMovieEntity]>) -> Void) {
+    internal func getCurrentPopularMovies(completion: @escaping (Transaction<[PopularMovieEntity]>) -> Void) {
         
         apiClient.read(GetPopularMoviesRequest(), DecodableType.PopularMoviesResponseEntity) { (transaction) in
             switch transaction {
@@ -38,6 +39,25 @@ class MovieService: MovieServiceProtocol {
         }
     }
     
+    internal func getMovieDetails(movieId: Int, completion: @escaping (Transaction<MovieDetailsEntity>) -> Void) {
+        
+        apiClient.read(GetDetailsMovieRequest(movieId: movieId), DecodableType.MovieDetailsEntity) { (transaction) in
+            
+            switch transaction {
+            case .sucess(let data):
+                if let dataUnwrapped = data as? MovieDetailsEntity {
+                    completion(Transaction.sucess(dataUnwrapped))
+                } else {
+                    completion(Transaction.fail(TransactionError.expectedPopularMovieEntity))
+                }
+            case .fail(let error):
+                completion(Transaction.fail(error))
+            }
+            
+            
+        }
+        
+    }
     
     
 }

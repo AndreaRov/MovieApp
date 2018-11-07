@@ -49,7 +49,7 @@ extension MoviesListPresenter: MoviesListPresenterDelegate {
     }
     
     func viewIsReady() {
-        movieService.getPopularMovies(completion: { (response) in
+        movieService.getCurrentPopularMovies(completion: { (response) in
             switch response {
             case .sucess(let data):
                 self.arrMovie = data
