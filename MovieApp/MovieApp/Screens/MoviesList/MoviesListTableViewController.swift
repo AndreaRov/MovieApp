@@ -10,6 +10,7 @@ import UIKit
 
 protocol MoviesListTableViewControllerDelegate: class {
     func reloadData()
+    func goToDetailView(withIdentifier: String)
 }
 
 class MoviesListTableViewController: UITableViewController {
@@ -17,7 +18,7 @@ class MoviesListTableViewController: UITableViewController {
     // MARK: Initialization
     @IBOutlet private var moviesTableView: UITableView!
     private let presenter:MoviesListPresenterDelegate = MoviesListPresenter(movieService: MovieService(apiClient: TheMovieDataBaseAPIClient()))
-
+    
     // MARK: View Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,21 +32,21 @@ class MoviesListTableViewController: UITableViewController {
         self.presenter.attachView(view: self)
         self.title = "Popular Movies"
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         if presenter.getNumberOfPopularMovies() == 0 {
-//            setBackgroundImage()
+            //            setBackgroundImage()
             return 0
         }
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.getNumberOfPopularMovies()
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -59,6 +60,21 @@ class MoviesListTableViewController: UITableViewController {
         }
         return tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath)
     }
+    
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.presenter.tableRowSelected(atRow: indexPath.row)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let movieDetailViewController = segue.destination as? MovieDetailViewController {
+            presenter.prepareMovieDetailVC(movieDetailViewController: movieDetailViewController)
+        }
+    }
+    
+    
+    
 }
 
 extension MoviesListTableViewController: MoviesListTableViewControllerDelegate {
@@ -67,5 +83,8 @@ extension MoviesListTableViewController: MoviesListTableViewControllerDelegate {
         self.moviesTableView.reloadData()
     }
     
-
+    func goToDetailView(withIdentifier: String) {
+        self.performSegue(withIdentifier: "MoviesListToDetail", sender: self)
+    }
+    
 }

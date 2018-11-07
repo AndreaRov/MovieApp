@@ -29,8 +29,9 @@ class MovieService: MovieServiceProtocol {
             case .sucess(let data):
                 if let dataUnwrapped = data as? [PopularMovieEntity] {
                     completion(Transaction.sucess(dataUnwrapped))
+                } else {
+                    completion(Transaction.fail(TransactionError.expectedPopularMovieEntity))
                 }
-                completion(Transaction.fail(TransactionError.expectedPopularMovieEntity))
             case .fail(let error):
                 completion(Transaction.fail(error))
             }

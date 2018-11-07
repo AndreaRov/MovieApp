@@ -56,8 +56,9 @@ class TheMovieDataBaseAPIClient: TheMovieDataBaseAPIClientProtocol {
                 }
                 }.resume()
             
+        } else {
+            completion(Transaction.fail(TransactionError.urlRequestUnwrappedFails))
         }
-        completion(Transaction.fail(TransactionError.urlRequestUnwrappedFails))
     }
     
     

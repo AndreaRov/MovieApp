@@ -18,6 +18,8 @@ protocol MoviesListPresenterDelegate {
     func getCellMovieDate(indexPath: IndexPath) -> String
     func getCellMovieDescription(indexPath: IndexPath) -> String
     func getCoverMovieImageURLString(indexPath: IndexPath) -> String
+    func tableRowSelected(atRow: Int)
+    func prepareMovieDetailVC(movieDetailViewController: MovieDetailViewController)
 }
 
 
@@ -26,7 +28,8 @@ class MoviesListPresenter {
     private let movieService:MovieService
     weak private var view: MoviesListTableViewControllerDelegate?
     
-    var arrMovie = [PopularMovieEntity]()
+    internal var arrMovie = [PopularMovieEntity]()
+    internal var movieEntitySelected: PopularMovieEntity?
     
     init(movieService: MovieService) {
         self.movieService = movieService
@@ -57,9 +60,6 @@ extension MoviesListPresenter: MoviesListPresenterDelegate {
                 print(error)
             }
         })
-       
-        
-        
     }
     
     func getNumberOfPopularMovies() -> Int {
@@ -86,5 +86,21 @@ extension MoviesListPresenter: MoviesListPresenterDelegate {
         return ""
     }
     
+    func tableRowSelected(atRow: Int) {
+        self.movieEntitySelected = self.arrMovie[atRow]
+        self.view?.goToDetailView(withIdentifier: "MoviesListToDetail")
+    }
+    
+    func prepareMovieDetailVC(movieDetailViewController: MovieDetailViewController) {
+        //Initialize API
+        let theMovieDataBaseAPIClient = TheMovieDataBaseAPIClient()
+        //Initialize Service
+        let movieService = MovieService(apiClient: theMovieDataBaseAPIClient)
+        if let movieEntitySelectedUnwrapped = self.movieEntitySelected {
+            //Initialize presenter
+            movieDetailViewController.presenter = MovieDetailPresenter(movieService: movieService, movie: movieEntitySelectedUnwrapped)
+        }
+        
+    }
     
 }

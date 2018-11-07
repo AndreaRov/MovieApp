@@ -9,18 +9,17 @@
 import UIKit
 
 class MoviesListTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak private var movieCover: UIImageView!
     @IBOutlet weak private var movieTitle: UILabel!
     @IBOutlet weak private var movieDate: UILabel!
     @IBOutlet weak private var movieDescription: UILabel!
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
     }
     
-    
+    //MARK: Getters and setters
     func setMovieCover(cover: UIImage) {
         self.movieCover.image = cover
     }
@@ -40,6 +39,6 @@ class MoviesListTableViewCell: UITableViewCell {
     func setMovieDescription(description: String) {
         self.movieDescription.text = description
     }
-
+    
     
 }

@@ -100,21 +100,46 @@
                     <navigationItem key="navigationItem" id="NaI-G1-NvR"/>
                     <connections>
                         <outlet property="moviesTableView" destination="Ma0-Vj-4Gp" id="fL7-O0-uVZ"/>
-                        <segue destination="73b-6j-w0P" kind="showDetail" identifier="MoviesListToDetail" id="yDd-pN-JyB"/>
+                        <segue destination="73b-6j-w0P" kind="show" identifier="MoviesListToDetail" id="yDd-pN-JyB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uWB-hJ-COx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="984.79999999999995" y="142.57871064467767"/>
         </scene>
-        <!--View Controller-->
+        <!--Movie Detail View Controller-->
         <scene sceneID="4Hd-g1-Tq7">
             <objects>
-                <viewController id="73b-6j-w0P" sceneMemberID="viewController">
+                <viewController id="73b-6j-w0P" customClass="MovieDetailViewController" customModule="MovieApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2SX-WY-edr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NAZ-4r-cm2">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ZX-I8-4gn">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="9ZX-I8-4gn" firstAttribute="top" secondItem="NAZ-4r-cm2" secondAttribute="top" id="7hC-aa-NPz"/>
+                                    <constraint firstAttribute="trailing" secondItem="9ZX-I8-4gn" secondAttribute="trailing" id="H1w-3i-cxk"/>
+                                    <constraint firstAttribute="bottom" secondItem="9ZX-I8-4gn" secondAttribute="bottom" id="XmR-wz-fie"/>
+                                    <constraint firstItem="9ZX-I8-4gn" firstAttribute="height" secondItem="NAZ-4r-cm2" secondAttribute="height" priority="250" id="g44-Au-UfE"/>
+                                    <constraint firstItem="9ZX-I8-4gn" firstAttribute="leading" secondItem="NAZ-4r-cm2" secondAttribute="leading" id="ou8-Yk-BIB"/>
+                                    <constraint firstItem="9ZX-I8-4gn" firstAttribute="width" secondItem="NAZ-4r-cm2" secondAttribute="width" id="qCz-oI-mFa"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5O5-UN-bQO" firstAttribute="bottom" secondItem="NAZ-4r-cm2" secondAttribute="bottom" id="34t-7x-0en"/>
+                            <constraint firstItem="5O5-UN-bQO" firstAttribute="trailing" secondItem="NAZ-4r-cm2" secondAttribute="trailing" id="CQl-c8-zTf"/>
+                            <constraint firstItem="NAZ-4r-cm2" firstAttribute="top" secondItem="5O5-UN-bQO" secondAttribute="top" id="GZj-ru-Fh4"/>
+                            <constraint firstItem="NAZ-4r-cm2" firstAttribute="leading" secondItem="5O5-UN-bQO" secondAttribute="leading" id="MyP-YD-xd0"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="5O5-UN-bQO"/>
                     </view>
                 </viewController>
