@@ -25,7 +25,7 @@ class MoviesListPresenter {
     private let movieService:MovieService
     weak private var view: MoviesListTableViewControllerDelegate?
     
-    var arrMovie = [MovieEntity]()
+    var arrMovie = [PopularMovieEntity]()
     
     init(movieService: MovieService) {
         self.movieService = movieService
@@ -45,7 +45,7 @@ extension MoviesListPresenter: MoviesListPresenterDelegate {
     }
     
     func viewIsReady() {
-        movieService.getPopularMovies(onCompletion: { (response) in
+        movieService.getPopularMovies(completion: { (response) in
             switch response {
             case .sucess(let data):
                 self.arrMovie = data
@@ -56,6 +56,9 @@ extension MoviesListPresenter: MoviesListPresenterDelegate {
                 print(error)
             }
         })
+       
+        
+        
     }
     
     func getNumberOfPopularMovies() -> Int {
@@ -63,15 +66,15 @@ extension MoviesListPresenter: MoviesListPresenterDelegate {
     }
     
     func getCellMovieTitle(indexPath: IndexPath) -> String {
-        return self.arrMovie[indexPath.row].name ?? ""
+        return self.arrMovie[indexPath.row].title ?? ""
     }
     
     func getCellMovieDate(indexPath: IndexPath) -> String {
-        return self.arrMovie[indexPath.row].date ?? ""
+        return self.arrMovie[indexPath.row].release_date ?? ""
     }
     
     func getCellMovieDescription(indexPath: IndexPath) -> String {
-        return self.arrMovie[indexPath.row].description ?? ""
+        return self.arrMovie[indexPath.row].overview ?? ""
     }
 
     

@@ -16,7 +16,7 @@ class MoviesListTableViewController: UITableViewController {
     
     // MARK: Initialization
     @IBOutlet private var moviesTableView: UITableView!
-    private let presenter:MoviesListPresenterDelegate = MoviesListPresenter(movieService: MovieService())
+    private let presenter:MoviesListPresenterDelegate = MoviesListPresenter(movieService: MovieService(apiClient: TheMovieDataBaseAPIClient()))
 
     // MARK: View Cycles
     override func viewDidLoad() {
