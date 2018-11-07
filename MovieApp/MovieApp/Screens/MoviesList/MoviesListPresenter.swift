@@ -17,6 +17,7 @@ protocol MoviesListPresenterDelegate {
     func getCellMovieTitle(indexPath: IndexPath) -> String
     func getCellMovieDate(indexPath: IndexPath) -> String
     func getCellMovieDescription(indexPath: IndexPath) -> String
+    func getCoverMovieImageURLString(indexPath: IndexPath) -> String
 }
 
 
@@ -76,7 +77,14 @@ extension MoviesListPresenter: MoviesListPresenterDelegate {
     func getCellMovieDescription(indexPath: IndexPath) -> String {
         return self.arrMovie[indexPath.row].overview ?? ""
     }
-
+    
+    func getCoverMovieImageURLString(indexPath: IndexPath) -> String {
+        if let posterPath = self.arrMovie[indexPath.row].poster_path {
+            let downloadImageRequest = DownloadImageRequest(posterPath: posterPath)
+            return downloadImageRequest.resourceName
+        }
+        return ""
+    }
     
     
 }

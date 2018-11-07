@@ -25,6 +25,10 @@ class MoviesListTableViewCell: UITableViewCell {
         self.movieCover.image = cover
     }
     
+    func setDownloadedImageCover(URLString: String) {
+        self.movieCover.imageFromServerURL(URLString, imagePlaceHolder: UIImage(named: "DefaultMoviesListPhoto"))
+    }
+    
     func setMovieTitle(title: String) {
         self.movieTitle.text = title
     }

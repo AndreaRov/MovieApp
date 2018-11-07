@@ -21,6 +21,8 @@
 		656A9ADE2191142A0078AD16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 656A9ADC2191142A0078AD16 /* Main.storyboard */; };
 		656A9AE02191142B0078AD16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 656A9ADF2191142B0078AD16 /* Assets.xcassets */; };
 		656A9AE32191142B0078AD16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 656A9AE12191142B0078AD16 /* LaunchScreen.storyboard */; };
+		65A221032193277300A1C45E /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A221022193277300A1C45E /* UIImageExtension.swift */; };
+		65A221052193459300A1C45E /* DownloadImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A221042193459300A1C45E /* DownloadImageRequest.swift */; };
 		65B965AC2191C52C00A807FD /* MoviesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B965AB2191C52C00A807FD /* MoviesListTableViewCell.swift */; };
 		65F44F302191B3F80075D79C /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F44F2F2191B3F80075D79C /* MovieDetailViewController.swift */; };
 		65F44F322191B6EF0075D79C /* MoviesListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F44F312191B6EF0075D79C /* MoviesListTableViewController.swift */; };
@@ -43,6 +45,8 @@
 		656A9ADF2191142B0078AD16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		656A9AE22191142B0078AD16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		656A9AE42191142B0078AD16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65A221022193277300A1C45E /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		65A221042193459300A1C45E /* DownloadImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImageRequest.swift; sourceTree = "<group>"; };
 		65B965AB2191C52C00A807FD /* MoviesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListTableViewCell.swift; sourceTree = "<group>"; };
 		65F44F2F2191B3F80075D79C /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		65F44F312191B6EF0075D79C /* MoviesListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListTableViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +108,7 @@
 				65053A7821926E4400BC99C0 /* APIRequestProtocol.swift */,
 				65053A7A21926EB600BC99C0 /* GetPopularMoviesRequest.swift */,
 				65053A7C21927C0000BC99C0 /* GetDetailsMovieRequest.swift */,
+				65A221042193459300A1C45E /* DownloadImageRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -135,6 +140,7 @@
 		656A9AD72191142A0078AD16 /* MovieApp */ = {
 			isa = PBXGroup;
 			children = (
+				65A2210121931BC200A1C45E /* Extensions */,
 				656A9AD82191142A0078AD16 /* AppDelegate.swift */,
 				656A9ADC2191142A0078AD16 /* Main.storyboard */,
 				656A9AE12191142B0078AD16 /* LaunchScreen.storyboard */,
@@ -144,6 +150,14 @@
 				65053A642191EF0E00BC99C0 /* Core */,
 			);
 			path = MovieApp;
+			sourceTree = "<group>";
+		};
+		65A2210121931BC200A1C45E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				65A221022193277300A1C45E /* UIImageExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		65F44F2B2191B3490075D79C /* MoviesList */ = {
@@ -243,6 +257,8 @@
 				65053A7F21927E1800BC99C0 /* PopularMovieEntity.swift in Sources */,
 				65053A8421928BF000BC99C0 /* MovieService.swift in Sources */,
 				65053A7D21927C0000BC99C0 /* GetDetailsMovieRequest.swift in Sources */,
+				65A221032193277300A1C45E /* UIImageExtension.swift in Sources */,
+				65A221052193459300A1C45E /* DownloadImageRequest.swift in Sources */,
 				65B965AC2191C52C00A807FD /* MoviesListTableViewCell.swift in Sources */,
 				65F44F322191B6EF0075D79C /* MoviesListTableViewController.swift in Sources */,
 				65053A742192301F00BC99C0 /* HTTPStatusCode.swift in Sources */,

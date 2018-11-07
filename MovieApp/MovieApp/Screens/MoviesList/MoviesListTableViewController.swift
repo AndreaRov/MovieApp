@@ -29,6 +29,7 @@ class MoviesListTableViewController: UITableViewController {
     
     private func configureView() {
         self.presenter.attachView(view: self)
+        self.title = "Popular Movies"
     }
 
     // MARK: - Table view data source
@@ -52,12 +53,12 @@ class MoviesListTableViewController: UITableViewController {
             cellUnwrapped.setMovieTitle(title: presenter.getCellMovieTitle(indexPath: indexPath))
             cellUnwrapped.setMovieDate(date: presenter.getCellMovieDate(indexPath: indexPath))
             cellUnwrapped.setMovieDescription(description: presenter.getCellMovieDescription(indexPath: indexPath))
+            let urlString = presenter.getCoverMovieImageURLString(indexPath: indexPath)
+            cellUnwrapped.setDownloadedImageCover(URLString: urlString)
             return cellUnwrapped
         }
-        
         return tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath)
     }
-    
 }
 
 extension MoviesListTableViewController: MoviesListTableViewControllerDelegate {

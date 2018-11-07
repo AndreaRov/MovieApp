@@ -11,7 +11,7 @@ import Foundation
 
 enum TransactionError: Error {
     case server(message: String)
-    case movieEntityUnwrappedFails
+    case entityUnwrappedFails
     case urlRequestUnwrappedFails
     case expectedPopularMovieEntity
 }

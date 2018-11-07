@@ -35,9 +35,7 @@ class TheMovieDataBaseAPIClient: TheMovieDataBaseAPIClientProtocol {
                         completion(Transaction.fail(TransactionError.server(message: statusMessage?.status_message ?? "Status code: \(httpResponse.statusCode)")))
                         
                     } else if httpResponse.statusCode == 200 {
-                        
                         //TODO: Si hay distintas request, cambiará el Decodable.Protocol
-                        
                         switch decodable {
                         case .PopularMoviesResponseEntity:
                             let popularMovies = try? jsonDec.decode(PopularMoviesResponseEntity.self, from: data!)
@@ -47,7 +45,7 @@ class TheMovieDataBaseAPIClient: TheMovieDataBaseAPIClientProtocol {
                             if let movieEntityUnwrapped = popularMovies?.results {
                                 completion(Transaction.sucess(movieEntityUnwrapped))
                             } else {
-                                completion(Transaction.fail(TransactionError.movieEntityUnwrappedFails))
+                                completion(Transaction.fail(TransactionError.entityUnwrappedFails))
                             }
                             
                         }
@@ -87,7 +85,6 @@ class TheMovieDataBaseAPIClient: TheMovieDataBaseAPIClientProtocol {
 //
 //                    } else if httpResponse.statusCode == 200 {
 //                        let popularMovies = try? jsonDec.decode(PopularMoviesResponseEntity.self, from: data!)
-//                        //TODO: Delete this print
 //                        print("TotalMovies:",popularMovies?.results.count as Any)
 //
 //                        if let movieEntityUnwrapped = popularMovies?.results {
