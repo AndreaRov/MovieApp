@@ -17,10 +17,7 @@ class MoviesListTableViewController: UITableViewController {
     
     // MARK: Initialization
     @IBOutlet private var moviesTableView: UITableView!
-    @IBOutlet weak var FavoritesMoviesBarButtonItem: UIBarButtonItem!
-    
-    
-    
+    @IBOutlet weak var favoritesMoviesBarButtonItem: UIBarButtonItem!
     
     private let presenter:MoviesListPresenterDelegate = MoviesListPresenter(movieService: MovieService(apiClient: TheMovieDataBaseAPIClient()))
     
@@ -36,6 +33,29 @@ class MoviesListTableViewController: UITableViewController {
     private func configureView() {
         self.presenter.attachView(view: self)
         self.title = "Popular Movies"
+    }
+    
+    private func configureFavoritesMoviesBarButtonItem() {
+        if let button: UIButton = UIButton(type: UIButton.ButtonType.custom) as? UIButton {
+            button.setImage(UIImage(named: "Movies"), for: UIControl.State.normal)
+            let barButton = UIBarButtonItem(customView: button)
+            self.navigationItem.rightBarButtonItem = barButton
+        }
+    
+    
+    
+    
+    
+    //        self.favoritesMoviesBarButtonItem.setBackgroundImage(UIImage(named: "PlayVideo"), for: UIControl.State.normal, barMetrics: .default)
+    //        favoritesMoviesBarButtonItem
+    //
+    //        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.rewind, target: self, action: nil)
+    //        favoritesMoviesBarButtonItem.
+    //
+    //        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem., target: self, action: "someAction")
+    //        navigationBar.topItem.leftBarButtonItem = button
+    
+    
     }
     
     // MARK: - Table view data source
@@ -82,7 +102,7 @@ class MoviesListTableViewController: UITableViewController {
     // MARK: - Events
     
     @IBAction func favoritesMoviesBarButtonItemSelected(_ sender: Any) {
-        
+        self.configureFavoritesMoviesBarButtonItem()
     }
     
     

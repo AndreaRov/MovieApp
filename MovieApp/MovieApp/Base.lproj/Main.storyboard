@@ -98,7 +98,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="trq-dq-SG4">
-                        <barButtonItem key="rightBarButtonItem" image="FavoriteFilmOn" id="aJx-u3-em8">
+                        <barButtonItem key="rightBarButtonItem" image="FavoriteTop" id="aJx-u3-em8">
                             <color key="tintColor" red="0.92156862745098034" green="0.80784313725490198" blue="0.38431372549019605" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="favoritesMoviesBarButtonItemSelected:" destination="8MF-ww-I5C" id="dfz-Ph-Zqr"/>
@@ -106,7 +106,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="FavoritesMoviesBarButtonItem" destination="aJx-u3-em8" id="Hwo-gm-7ta"/>
+                        <outlet property="favoritesMoviesBarButtonItem" destination="aJx-u3-em8" id="B3h-6G-xOf"/>
                         <outlet property="moviesTableView" destination="Ma0-Vj-4Gp" id="fL7-O0-uVZ"/>
                         <segue destination="73b-6j-w0P" kind="show" identifier="MoviesListToDetail" id="yDd-pN-JyB"/>
                     </connections>
@@ -318,7 +318,7 @@
     <resources>
         <image name="DefaultMoviesListPhoto" width="500" height="500"/>
         <image name="FavoriteFilmOff" width="16" height="16"/>
-        <image name="FavoriteFilmOn" width="16" height="16"/>
+        <image name="FavoriteTop" width="16" height="16"/>
         <image name="PlayVideo" width="16" height="16"/>
     </resources>
 </document>
