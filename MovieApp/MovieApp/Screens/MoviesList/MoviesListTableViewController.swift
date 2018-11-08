@@ -17,6 +17,11 @@ class MoviesListTableViewController: UITableViewController {
     
     // MARK: Initialization
     @IBOutlet private var moviesTableView: UITableView!
+    @IBOutlet weak var FavoritesMoviesBarButtonItem: UIBarButtonItem!
+    
+    
+    
+    
     private let presenter:MoviesListPresenterDelegate = MoviesListPresenter(movieService: MovieService(apiClient: TheMovieDataBaseAPIClient()))
     
     // MARK: View Cycles
@@ -66,12 +71,20 @@ class MoviesListTableViewController: UITableViewController {
         self.presenter.tableRowSelected(atRow: indexPath.row)
     }
     
-    
+    // MARK: - Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let movieDetailViewController = segue.destination as? MovieDetailViewController {
             presenter.prepareMovieDetailVC(movieDetailViewController: movieDetailViewController)
         }
     }
+    
+    
+    // MARK: - Events
+    
+    @IBAction func favoritesMoviesBarButtonItemSelected(_ sender: Any) {
+        
+    }
+    
     
     
     
