@@ -16,6 +16,9 @@ protocol MovieDetailPresenterDelegate {
     
     func getCoverMovieImageURLString() -> String
     func getBackgroundCoverImageURLString() -> String
+    
+    func getTicketsWebURL() -> URL?
+    func getTrailerURL() -> URL?
 }
 
 class MovieDetailPresenter {
@@ -24,6 +27,9 @@ class MovieDetailPresenter {
     
     internal var movie: PopularMovieEntity
     private var movieDetail: MovieDetailsEntity?
+    private var movieVideos = [VideosEntity]()
+    
+    private var movieVideoTrailerKey = ""
     
     init(movieService: MovieService, movie: PopularMovieEntity) {
         self.movieService = movieService
@@ -87,6 +93,19 @@ class MovieDetailPresenter {
         return voteFinalString
     }
     
+    private func getVideoTrailerKey() -> String {
+        let videos = self.movieVideos
+        var videoKey = ""
+        for video in videos {
+            if video.type == "Trailer" {
+                if let videoKeyUnwrapped = video.key {
+                    videoKey = videoKeyUnwrapped
+                }
+            }
+        }
+        return videoKey
+    }
+    
     
 }
 
@@ -102,14 +121,20 @@ extension MovieDetailPresenter: MovieDetailPresenterDelegate {
     }
     
     func viewIsReady() {
+        //Data taken from the previous presenter
         setPopularMovieData()
         if let movieIdUnwrapped = self.movie.id {
+            //Data from movie details
             movieService.getMovieDetails(movieId: movieIdUnwrapped) { (response) in
                 switch response {
                 case .sucess(let data):
                     self.movieDetail = data
                     
                     DispatchQueue.main.async {
+                        if (self.movieDetail?.homepage) == nil {
+                            self.view?.setMovieTicketsButtonHidden(hidden: true)
+                        }
+                        
                         let finalGenreString = self.getMovieDetailFinalGenreString()
                         self.view?.setMovieGenresLabel(genres: finalGenreString)
                         
@@ -123,6 +148,25 @@ extension MovieDetailPresenter: MovieDetailPresenterDelegate {
                     print(error)
                 }
             }
+            
+            //Data from movie videos
+            /*
+            movieService.getMovieVideos(movieId: movieIdUnwrapped) { (response) in
+                switch response {
+                case .sucess(let data):
+                    self.movieVideos = data
+                    
+                    DispatchQueue.main.async {
+                        let trailerKey = self.getVideoTrailerKey()
+                        self.movieVideoTrailerKey = trailerKey
+                    }
+                    
+                case .fail(let error):
+                    print(error)
+                }
+            }
+            */
+            
         }
         
     }
@@ -144,5 +188,23 @@ extension MovieDetailPresenter: MovieDetailPresenterDelegate {
         return ""
     }
     
+    
+    func getTicketsWebURL() -> URL? {
+        
+        if let homePageTicketsUnwrapped = self.movieDetail?.homepage, let urlUnwrapped = URL(string: homePageTicketsUnwrapped) {
+            return urlUnwrapped
+        }
+        return nil
+    }
+    
+    func getTrailerURL() -> URL? {
+        
+        let youtubeBaseURL = "https://www.youtube.com/watch?v="
+        let endPoint = self.movieVideoTrailerKey
+        let completeURLString = youtubeBaseURL + endPoint
+        let trailerURL = URL(string: completeURLString)
+
+        return trailerURL
+    }
     
 }

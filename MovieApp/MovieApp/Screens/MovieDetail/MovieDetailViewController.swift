@@ -7,6 +7,7 @@
 //
 
 import UIKit
+//import AVKit
 
 protocol MovieDetailViewControllerDelegate: class {
     func setMovieCoverImageView(image: UIImage)
@@ -20,6 +21,8 @@ protocol MovieDetailViewControllerDelegate: class {
     func setMovieGenresLabel(genres: String)
     func setMovieVoteTitleLabel(title: String)
     func setMovieVoteLabel(voteLavel: String)
+    
+    func setMovieTicketsButtonHidden(hidden: Bool)
 }
 
 class MovieDetailViewController: UIViewController {
@@ -52,20 +55,53 @@ class MovieDetailViewController: UIViewController {
     
     private func configureView() {
         self.presenter?.attachView(view: self)
+        self.trailerButton.isHidden = true
     }
     
-//    private func setImageMarkAsFavoriteButton() {
-//        
-//        if let favoriteButtonImageUnwrapped = markAsFavoriteButton.imageView?.image {
-//            if favoriteButtonImageUnwrapped == UIImage(named: "FavoriteFilmOff") {
-//                self.markAsFavoriteButton.setImage(UIImage(named: "FavoriteFilmOn"), for: UIControl.State.normal)
-//            } else {
-//                self.markAsFavoriteButton.setImage(UIImage(named: "FavoriteFilmOff"), for: UIControl.State.normal)
-//            }
-//        }
-//        
-//    }
+    private func setImageMarkAsFavoriteButton() {
+        if let favoriteButtonImageUnwrapped = markAsFavoriteButton.imageView?.image {
+            if favoriteButtonImageUnwrapped == UIImage(named: "FavoriteFilmOff") {
+                self.markAsFavoriteButton.setImage(UIImage(named: "FavoriteFilmOn"), for: UIControl.State.normal)
+                self.markAsFavoriteButton.setTitle("Favorite", for: UIControl.State.normal)
+                
+            } else {
+                self.markAsFavoriteButton.setImage(UIImage(named: "FavoriteFilmOff"), for: UIControl.State.normal)
+                self.markAsFavoriteButton.setTitle("Mark As Favorite", for: UIControl.State.normal)
+            }
+        }
+    }
     
+    
+    // MARK: Events
+    @IBAction func movieTicketsButtonPressed(_ sender: Any) {
+        
+        if let urlUnwrapped = self.presenter?.getTicketsWebURL() {
+            UIApplication.shared.open(urlUnwrapped, options: [:])
+        }
+       
+    }
+    
+    @IBAction func trailerButtonPressed(_ sender: Any) {
+        
+//        if let urlUnwrapped = self.presenter?.getTrailerURL() {
+//        if let urlUnwrapped = URL(string: "https://www.youtube.com/watch?v=bhxhNIQBKJI") {
+            
+            /*
+            let player = AVPlayer(url: urlUnwrapped)
+            let playerViewController  =  AVPlayerViewController()
+            playerViewController.player   =  player
+            self.present(playerViewController, animated: true) {
+                playerViewController.player?.play()
+            }
+             */
+//        }
+  
+    }
+    
+    
+    @IBAction func markAsFavoriteButtonPressed(_ sender: Any) {
+        setImageMarkAsFavoriteButton()
+    }
     
 
 }
@@ -115,6 +151,10 @@ extension MovieDetailViewController: MovieDetailViewControllerDelegate {
     
     func setMovieVoteLabel(voteLavel: String) {
         self.movieVoteLabel.text = voteLavel
+    }
+    
+    func setMovieTicketsButtonHidden(hidden: Bool) {
+        self.movieTicketsButton.isHidden = hidden
     }
     
     

@@ -15,6 +15,7 @@ enum TransactionError: Error {
     case urlRequestUnwrappedFails
     case expectedPopularMovieEntity
     case expectedMovieDetailsEntity
+    case expectedVideosEntity
 }
 
 enum Transaction<Value:Any> {

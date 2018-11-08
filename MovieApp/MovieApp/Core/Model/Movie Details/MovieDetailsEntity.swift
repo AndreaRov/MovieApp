@@ -9,7 +9,7 @@
 import Foundation
 
 struct MovieDetailsEntity: Codable {
-    let homepage: String? //Get tickets
+    let homepage: String? 
     let genres: [GenresEntity]
     let vote_average:Double?
 }

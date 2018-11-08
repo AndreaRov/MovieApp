@@ -155,6 +155,9 @@
                                                         <state key="normal" title="Mark As Favorite" image="FavoriteFilmOff">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="markAsFavoriteButtonPressed:" destination="73b-6j-w0P" eventType="touchUpInside" id="NqQ-Yd-Wdw"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tP2-Fc-ErI">
                                                         <rect key="frame" x="155" y="64.5" width="92" height="18"/>
@@ -162,6 +165,9 @@
                                                         <state key="normal" title="Play Trailer" image="PlayVideo">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="trailerButtonPressed:" destination="73b-6j-w0P" eventType="touchUpInside" id="vCi-n4-a7F"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1zG-bV-U92">
                                                         <rect key="frame" x="158" y="132" width="209" height="32"/>
@@ -169,6 +175,9 @@
                                                         <state key="normal" title="Get Tickets Now!">
                                                             <color key="titleColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="movieTicketsButtonPressed:" destination="73b-6j-w0P" eventType="touchUpInside" id="N4U-1X-Sxi"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="displayP3"/>
