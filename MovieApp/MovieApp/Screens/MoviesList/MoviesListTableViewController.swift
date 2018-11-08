@@ -42,19 +42,27 @@ class MoviesListTableViewController: UITableViewController {
             self.navigationItem.rightBarButtonItem = barButton
         }
     
+    /*
+        //create a new button
+        let button: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        //set image for button
+        button.setImage(UIImage(named: "fb.png"), forState: UIControlState.Normal)
+        //add function for button
+        button.addTarget(self, action: "fbButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        //set frame
+        button.frame = CGRectMake(0, 0, 53, 31)
+        
+        let barButton = UIBarButtonItem(customView: button)
+        //assign button to navigationbar
+        self.navigationItem.rightBarButtonItem = barButton
+    }
     
-    
-    
-    
-    //        self.favoritesMoviesBarButtonItem.setBackgroundImage(UIImage(named: "PlayVideo"), for: UIControl.State.normal, barMetrics: .default)
-    //        favoritesMoviesBarButtonItem
-    //
-    //        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.rewind, target: self, action: nil)
-    //        favoritesMoviesBarButtonItem.
-    //
-    //        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem., target: self, action: "someAction")
-    //        navigationBar.topItem.leftBarButtonItem = button
-    
+    //This method will call when you press button.
+    func fbButtonPressed() {
+        
+        println("Share to fb")
+    }
+    */
     
     }
     
