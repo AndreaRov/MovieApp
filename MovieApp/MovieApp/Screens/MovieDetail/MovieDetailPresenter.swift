@@ -211,28 +211,75 @@ extension MovieDetailPresenter: MovieDetailPresenterDelegate {
     }
     
     func addAsFavoriteMovie(managedContext: NSManagedObjectContext) {
-        var tasks = [NSManagedObject]()
         
-        //Guardar
-        let entity = NSEntityDescription.entity(forEntityName: "FavoritesMovies", in: managedContext)
-        let task = NSManagedObject(entity: entity!, insertInto: managedContext)
-        task.setValue(self.movie.id, forKey: "id")
-        task.setValue(self.movie.title, forKey: "title")
-        task.setValue(self.movie.poster_path, forKey: "poster_path")
-        task.setValue(self.movie.backdrop_path, forKey: "backdrop_path")
-        task.setValue(self.movie.overview, forKey: "overview")
-        task.setValue(self.movie.release_date, forKey: "release_date")
+        //Check if movie isn't added in core data
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoritesMovies")
+        //        fetch.includesPropertyValues = false
         
         do {
-            try managedContext.save()
-            tasks.append(task)
+            let items = try managedContext.fetch(fetchRequest) as! [NSManagedObject]
+            var itemAlreadyExistsinCoreData: Bool = false
+            for item in items {
+                let itemId = item.value(forKey: "id") as? Int
+                if self.movie.id == itemId {
+                    itemAlreadyExistsinCoreData = true
+                }
+            }
+            
+            if itemAlreadyExistsinCoreData == false {
+            //Add entity in core data
+                var tasks = [NSManagedObject]()
+                
+                let entity = NSEntityDescription.entity(forEntityName: "FavoritesMovies", in: managedContext)
+                let task = NSManagedObject(entity: entity!, insertInto: managedContext)
+                task.setValue(self.movie.id, forKey: "id")
+                task.setValue(self.movie.title, forKey: "title")
+                task.setValue(self.movie.poster_path, forKey: "poster_path")
+                task.setValue(self.movie.backdrop_path, forKey: "backdrop_path")
+                task.setValue(self.movie.overview, forKey: "overview")
+                task.setValue(self.movie.release_date, forKey: "release_date")
+                
+                try managedContext.save()
+                tasks.append(task)
+                
+            } else {
+                print("Already saved this film in core dat")
+            }
+            
         } catch let error as NSError {
-            print("No ha sido posible guardar \(error), \(error.userInfo)")
+            print("No ha sido posible leer \(error), \(error.userInfo)")
         }
+        
+        
     
     }
     
     func removeFromFavoritesMovies(managedContext: NSManagedObjectContext) {
+        //Remove the specific movie from core data by movie id
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoritesMovies")
+//        fetch.includesPropertyValues = false
+        
+        do {
+            let items = try managedContext.fetch(fetchRequest) as! [NSManagedObject]
+            
+            for item in items {
+                //Check which movie to delete
+                let itemId = item.value(forKey: "id") as? Int
+                if self.movie.id == itemId {
+                    managedContext.delete(item)
+                }
+            }
+            
+            // Save Changes
+            try managedContext.save()
+            
+        } catch let error as NSError {
+            print("Error al borrar en core data: \(error), \(error.userInfo)")
+        }
+        
+        
+        //Remove all from core data
+        /*
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoritesMovies")
         let request = NSBatchDeleteRequest(fetchRequest: fetch)
         
@@ -241,6 +288,7 @@ extension MovieDetailPresenter: MovieDetailPresenterDelegate {
         } catch let error as NSError {
             print("Error al borrar en core data: \(error), \(error.userInfo)")
         }
+         */
     }
     
 }
