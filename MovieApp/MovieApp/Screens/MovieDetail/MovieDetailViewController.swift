@@ -101,6 +101,9 @@ class MovieDetailViewController: UIViewController {
     
     @IBAction func markAsFavoriteButtonPressed(_ sender: Any) {
         setImageMarkAsFavoriteButton()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        self.presenter?.addAsFavoriteMovie(managedContext: managedContext)
     }
     
 

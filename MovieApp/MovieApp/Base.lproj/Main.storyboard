@@ -100,9 +100,6 @@
                     <navigationItem key="navigationItem" id="trq-dq-SG4">
                         <barButtonItem key="rightBarButtonItem" image="FavoriteTop" id="aJx-u3-em8">
                             <color key="tintColor" red="0.92156862745098034" green="0.80784313725490198" blue="0.38431372549019605" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="favoritesMoviesBarButtonItemSelected:" destination="8MF-ww-I5C" id="dfz-Ph-Zqr"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

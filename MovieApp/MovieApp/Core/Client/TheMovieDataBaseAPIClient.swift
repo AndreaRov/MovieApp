@@ -42,7 +42,7 @@ class TheMovieDataBaseAPIClient: TheMovieDataBaseAPIClientProtocol {
                         case .PopularMoviesResponseEntity:
                             let popularMovies = try? jsonDec.decode(PopularMoviesResponseEntity.self, from: data!)
                             //TODO: Delete this print
-                            print("TotalMovies:",popularMovies?.results.count as Any)
+//                            print("TotalMovies:",popularMovies?.results.count as Any)
                             
                             if let movieEntityUnwrapped = popularMovies?.results {
                                 completion(Transaction.sucess(movieEntityUnwrapped))

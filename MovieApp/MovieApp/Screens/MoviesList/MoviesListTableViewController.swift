@@ -11,6 +11,7 @@ import UIKit
 protocol MoviesListTableViewControllerDelegate: class {
     func reloadData()
     func goToDetailView(withIdentifier: String)
+    func changeTitle(title: String)
 }
 
 class MoviesListTableViewController: UITableViewController {
@@ -29,41 +30,28 @@ class MoviesListTableViewController: UITableViewController {
     }
     
     // MARK: Private Class Methods
-    
     private func configureView() {
         self.presenter.attachView(view: self)
         self.title = "Popular Movies"
+        addFavoritesMoviesBarButtonItem()
     }
     
-    private func configureFavoritesMoviesBarButtonItem() {
-        if let button: UIButton = UIButton(type: UIButton.ButtonType.custom) as? UIButton {
-            button.setImage(UIImage(named: "Movies"), for: UIControl.State.normal)
-            let barButton = UIBarButtonItem(customView: button)
-            self.navigationItem.rightBarButtonItem = barButton
-        }
-    
-    /*
-        //create a new button
-        let button: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        //set image for button
-        button.setImage(UIImage(named: "fb.png"), forState: UIControlState.Normal)
-        //add function for button
-        button.addTarget(self, action: "fbButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
-        //set frame
-        button.frame = CGRectMake(0, 0, 53, 31)
-        
-        let barButton = UIBarButtonItem(customView: button)
-        //assign button to navigationbar
-        self.navigationItem.rightBarButtonItem = barButton
+    private func addFavoritesMoviesBarButtonItem() {
+        //Favorites Movies Button
+        let buttonFavorites: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        buttonFavorites.setImage(UIImage(named: "FavoriteTop"), for: UIControl.State.normal)
+        buttonFavorites.addTarget(self, action: #selector(favoriteMoviesButtonPressed), for: UIControl.Event.touchUpInside)
+        let barButtonFavorites = UIBarButtonItem(customView: buttonFavorites)
+        self.navigationItem.rightBarButtonItem = barButtonFavorites
     }
     
-    //This method will call when you press button.
-    func fbButtonPressed() {
-        
-        println("Share to fb")
-    }
-    */
-    
+    private func addPopularMoviesBarButtonItem() {
+        //Popular Movies Button
+        let buttonPopular: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        buttonPopular.setImage(UIImage(named: "Movies"), for: UIControl.State.normal)
+        buttonPopular.addTarget(self, action: #selector(popularMoviesButtonPressed), for: UIControl.Event.touchUpInside)
+        let barButtonPopular = UIBarButtonItem(customView: buttonPopular)
+        self.navigationItem.rightBarButtonItem = barButtonPopular
     }
     
     // MARK: - Table view data source
@@ -109,11 +97,19 @@ class MoviesListTableViewController: UITableViewController {
     
     // MARK: - Events
     
-    @IBAction func favoritesMoviesBarButtonItemSelected(_ sender: Any) {
-        self.configureFavoritesMoviesBarButtonItem()
+    @objc func favoriteMoviesButtonPressed() {
+        self.addPopularMoviesBarButtonItem()
+        //Recargar tabla con peliculas favoritas
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        self.presenter.showMyFavoritesMovies(managedContext: managedContext)
     }
     
-    
+    @objc func popularMoviesButtonPressed() {
+        self.addFavoritesMoviesBarButtonItem()
+        //Recargar tabla con peliculas populares descargar otra vez del servicio o array
+        self.presenter.showPopularMovies()
+    }
     
     
 }
@@ -126,6 +122,10 @@ extension MoviesListTableViewController: MoviesListTableViewControllerDelegate {
     
     func goToDetailView(withIdentifier: String) {
         self.performSegue(withIdentifier: "MoviesListToDetail", sender: self)
+    }
+    
+    func changeTitle(title: String) {
+        self.title = title
     }
     
 }

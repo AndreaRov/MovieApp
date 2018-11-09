@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 
 protocol MovieDetailPresenterDelegate {
@@ -19,6 +20,7 @@ protocol MovieDetailPresenterDelegate {
     
     func getTicketsWebURL() -> URL?
     func getTrailerURL() -> URL?
+    func addAsFavoriteMovie(managedContext: NSManagedObjectContext)
 }
 
 class MovieDetailPresenter {
@@ -205,6 +207,28 @@ extension MovieDetailPresenter: MovieDetailPresenterDelegate {
         let trailerURL = URL(string: completeURLString)
 
         return trailerURL
+    }
+    
+    func addAsFavoriteMovie(managedContext: NSManagedObjectContext) {
+        var tasks = [NSManagedObject]()
+        
+        //Guardar
+        let entity = NSEntityDescription.entity(forEntityName: "FavoritesMovies", in: managedContext)
+        let task = NSManagedObject(entity: entity!, insertInto: managedContext)
+        task.setValue(self.movie.id, forKey: "id")
+        task.setValue(self.movie.title, forKey: "title")
+        task.setValue(self.movie.poster_path, forKey: "poster_path")
+        task.setValue(self.movie.backdrop_path, forKey: "backdrop_path")
+        task.setValue(self.movie.overview, forKey: "overview")
+        task.setValue(self.movie.release_date, forKey: "release_date")
+        
+        do {
+            try managedContext.save()
+            tasks.append(task)
+        } catch let error as NSError {
+            print("No ha sido posible guardar \(error), \(error.userInfo)")
+        }
+    
     }
     
 }

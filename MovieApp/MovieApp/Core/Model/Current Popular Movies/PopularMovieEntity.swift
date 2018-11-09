@@ -15,4 +15,14 @@ struct PopularMovieEntity: Codable {
     let backdrop_path: String?
     let overview: String?
     let release_date: String?
+    
+    init(id: Int?, title: String?, poster_path: String?, backdrop_path: String?, overview: String?, release_date: String?) {
+        self.id = id
+        self.title = title
+        self.poster_path = poster_path
+        self.backdrop_path = backdrop_path
+        self.overview = overview
+        self.release_date = release_date
+    }
+    
 }
