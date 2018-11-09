@@ -21,6 +21,7 @@ protocol MovieDetailPresenterDelegate {
     func getTicketsWebURL() -> URL?
     func getTrailerURL() -> URL?
     func addAsFavoriteMovie(managedContext: NSManagedObjectContext)
+    func removeFromFavoritesMovies(managedContext: NSManagedObjectContext)
 }
 
 class MovieDetailPresenter {
@@ -229,6 +230,17 @@ extension MovieDetailPresenter: MovieDetailPresenterDelegate {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
     
+    }
+    
+    func removeFromFavoritesMovies(managedContext: NSManagedObjectContext) {
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoritesMovies")
+        let request = NSBatchDeleteRequest(fetchRequest: fetch)
+        
+        do {
+            let result = try managedContext.execute(request)
+        } catch let error as NSError {
+            print("Error al borrar en core data: \(error), \(error.userInfo)")
+        }
     }
     
 }

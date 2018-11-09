@@ -29,6 +29,10 @@ class MoviesListTableViewController: UITableViewController {
         presenter.viewIsReady()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        reloadFavoritesMoviesIfShown()
+    }
+    
     // MARK: Private Class Methods
     private func configureView() {
         self.presenter.attachView(view: self)
@@ -52,6 +56,14 @@ class MoviesListTableViewController: UITableViewController {
         buttonPopular.addTarget(self, action: #selector(popularMoviesButtonPressed), for: UIControl.Event.touchUpInside)
         let barButtonPopular = UIBarButtonItem(customView: buttonPopular)
         self.navigationItem.rightBarButtonItem = barButtonPopular
+    }
+    
+    private func reloadFavoritesMoviesIfShown() {
+        if self.title == "My Favorites Movies" {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let managedContext = appDelegate.persistentContainer.viewContext
+            self.presenter.showMyFavoritesMovies(managedContext: managedContext)
+        }
     }
     
     // MARK: - Table view data source

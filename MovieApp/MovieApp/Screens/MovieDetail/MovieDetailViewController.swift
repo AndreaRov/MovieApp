@@ -59,14 +59,19 @@ class MovieDetailViewController: UIViewController {
     }
     
     private func setImageMarkAsFavoriteButton() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
         if let favoriteButtonImageUnwrapped = markAsFavoriteButton.imageView?.image {
             if favoriteButtonImageUnwrapped == UIImage(named: "FavoriteFilmOff") {
                 self.markAsFavoriteButton.setImage(UIImage(named: "FavoriteFilmOn"), for: UIControl.State.normal)
                 self.markAsFavoriteButton.setTitle("Favorite", for: UIControl.State.normal)
-                
+                self.presenter?.addAsFavoriteMovie(managedContext: managedContext)
+
             } else {
                 self.markAsFavoriteButton.setImage(UIImage(named: "FavoriteFilmOff"), for: UIControl.State.normal)
                 self.markAsFavoriteButton.setTitle("Mark As Favorite", for: UIControl.State.normal)
+                self.presenter?.removeFromFavoritesMovies(managedContext: managedContext)
             }
         }
     }
@@ -101,9 +106,6 @@ class MovieDetailViewController: UIViewController {
     
     @IBAction func markAsFavoriteButtonPressed(_ sender: Any) {
         setImageMarkAsFavoriteButton()
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
-        self.presenter?.addAsFavoriteMovie(managedContext: managedContext)
     }
     
 
