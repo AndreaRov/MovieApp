@@ -56,6 +56,7 @@ class MovieDetailViewController: UIViewController {
     private func configureView() {
         self.presenter?.attachView(view: self)
         self.trailerButton.isHidden = true
+        changeFavoriteButtonAppearanceIfMovieisAlreadyFavorite()
     }
     
     private func setImageMarkAsFavoriteButton() {
@@ -74,6 +75,21 @@ class MovieDetailViewController: UIViewController {
                 self.presenter?.removeFromFavoritesMovies(managedContext: managedContext)
             }
         }
+    }
+    
+    
+    private func changeFavoriteButtonAppearanceIfMovieisAlreadyFavorite() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        if let presenterUnwrapped = self.presenter {
+            var itemAlreadyExistsinCoreData = false
+            itemAlreadyExistsinCoreData = presenterUnwrapped.checkIfMovieIsAddedInCoreData(managedContext: managedContext)
+            if itemAlreadyExistsinCoreData == true {
+                setImageMarkAsFavoriteButton()
+            }
+        }
+        
     }
     
     

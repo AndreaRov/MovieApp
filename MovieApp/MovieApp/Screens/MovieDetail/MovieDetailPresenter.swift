@@ -22,6 +22,7 @@ protocol MovieDetailPresenterDelegate {
     func getTrailerURL() -> URL?
     func addAsFavoriteMovie(managedContext: NSManagedObjectContext)
     func removeFromFavoritesMovies(managedContext: NSManagedObjectContext)
+    func checkIfMovieIsAddedInCoreData(managedContext: NSManagedObjectContext) -> (Bool)
 }
 
 class MovieDetailPresenter {
@@ -212,52 +213,37 @@ extension MovieDetailPresenter: MovieDetailPresenterDelegate {
     
     func addAsFavoriteMovie(managedContext: NSManagedObjectContext) {
         
-        //Check if movie isn't added in core data
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoritesMovies")
-        //        fetch.includesPropertyValues = false
+        let itemAlreadyExistsinCoreData:Bool = checkIfMovieIsAddedInCoreData(managedContext: managedContext)
         
-        do {
-            let items = try managedContext.fetch(fetchRequest) as! [NSManagedObject]
-            var itemAlreadyExistsinCoreData: Bool = false
-            for item in items {
-                let itemId = item.value(forKey: "id") as? Int
-                if self.movie.id == itemId {
-                    itemAlreadyExistsinCoreData = true
-                }
-            }
-            
-            if itemAlreadyExistsinCoreData == false {
+        if itemAlreadyExistsinCoreData == false {
             //Add entity in core data
-                var tasks = [NSManagedObject]()
-                
-                let entity = NSEntityDescription.entity(forEntityName: "FavoritesMovies", in: managedContext)
-                let task = NSManagedObject(entity: entity!, insertInto: managedContext)
-                task.setValue(self.movie.id, forKey: "id")
-                task.setValue(self.movie.title, forKey: "title")
-                task.setValue(self.movie.poster_path, forKey: "poster_path")
-                task.setValue(self.movie.backdrop_path, forKey: "backdrop_path")
-                task.setValue(self.movie.overview, forKey: "overview")
-                task.setValue(self.movie.release_date, forKey: "release_date")
-                
+            var tasks = [NSManagedObject]()
+            
+            let entity = NSEntityDescription.entity(forEntityName: "FavoritesMovies", in: managedContext)
+            let task = NSManagedObject(entity: entity!, insertInto: managedContext)
+            task.setValue(self.movie.id, forKey: "id")
+            task.setValue(self.movie.title, forKey: "title")
+            task.setValue(self.movie.poster_path, forKey: "poster_path")
+            task.setValue(self.movie.backdrop_path, forKey: "backdrop_path")
+            task.setValue(self.movie.overview, forKey: "overview")
+            task.setValue(self.movie.release_date, forKey: "release_date")
+            
+            do {
                 try managedContext.save()
                 tasks.append(task)
-                
-            } else {
-                print("Already saved this film in core dat")
+            } catch let error as NSError {
+                print("No ha sido posible leer \(error), \(error.userInfo)")
             }
             
-        } catch let error as NSError {
-            print("No ha sido posible leer \(error), \(error.userInfo)")
+        } else {
+//            print("Already saved this film in coredata")
         }
         
-        
-    
     }
     
     func removeFromFavoritesMovies(managedContext: NSManagedObjectContext) {
         //Remove the specific movie from core data by movie id
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoritesMovies")
-//        fetch.includesPropertyValues = false
         
         do {
             let items = try managedContext.fetch(fetchRequest) as! [NSManagedObject]
@@ -277,8 +263,7 @@ extension MovieDetailPresenter: MovieDetailPresenterDelegate {
             print("Error al borrar en core data: \(error), \(error.userInfo)")
         }
         
-        
-        //Remove all from core data
+        //Remove all saved from core data
         /*
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoritesMovies")
         let request = NSBatchDeleteRequest(fetchRequest: fetch)
@@ -289,6 +274,24 @@ extension MovieDetailPresenter: MovieDetailPresenterDelegate {
             print("Error al borrar en core data: \(error), \(error.userInfo)")
         }
          */
+    }
+    
+    func checkIfMovieIsAddedInCoreData(managedContext: NSManagedObjectContext) -> (Bool) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoritesMovies")
+        
+        do {
+            let items = try managedContext.fetch(fetchRequest) as! [NSManagedObject]
+            for item in items {
+                let itemId = item.value(forKey: "id") as? Int
+                if self.movie.id == itemId {
+                    //If true is added in core data
+                    return true
+                }
+            }
+        } catch let error as NSError {
+            print("Error al borrar en core data: \(error), \(error.userInfo)")
+        }
+        return false
     }
     
 }
