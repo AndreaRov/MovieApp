@@ -36,12 +36,10 @@ class TheMovieDataBaseAPIClient: TheMovieDataBaseAPIClientProtocol {
                         completion(Transaction.fail(TransactionError.server(message: statusMessage?.status_message ?? "Status code: \(httpResponse.statusCode)")))
                         
                     } else if httpResponse.statusCode == 200 {
-                        //TODO: Si hay distintas request, cambiará el Decodable.Protocol
                         switch decodable {
                             
                         case .PopularMoviesResponseEntity:
                             let popularMovies = try? jsonDec.decode(PopularMoviesResponseEntity.self, from: data!)
-                            //TODO: Delete this print
 //                            print("TotalMovies:",popularMovies?.results.count as Any)
                             
                             if let movieEntityUnwrapped = popularMovies?.results {
