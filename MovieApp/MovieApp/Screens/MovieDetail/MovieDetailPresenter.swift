@@ -132,9 +132,9 @@ extension MovieDetailPresenter: MovieDetailPresenterDelegate {
             movieService.getMovieDetails(movieId: movieIdUnwrapped) { (response) in
                 switch response {
                 case .sucess(let data):
-                    self.movieDetail = data
-                    
                     DispatchQueue.main.async {
+                        self.movieDetail = data
+                        
                         if (self.movieDetail?.homepage) == nil {
                             self.view?.setMovieTicketsButtonHidden(hidden: true)
                         }
