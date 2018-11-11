@@ -42,8 +42,8 @@ class TheMovieDataBaseAPIClient: TheMovieDataBaseAPIClientProtocol {
                             let popularMovies = try? jsonDec.decode(PopularMoviesResponseEntity.self, from: data!)
 //                            print("TotalMovies:",popularMovies?.results.count as Any)
                             
-                            if let movieEntityUnwrapped = popularMovies?.results {
-                                completion(Transaction.sucess(movieEntityUnwrapped))
+                            if let popularMoviesUnwrapped = popularMovies {
+                                completion(Transaction.sucess(popularMoviesUnwrapped))
                             } else {
                                 completion(Transaction.fail(TransactionError.entityUnwrappedFails))
                             }

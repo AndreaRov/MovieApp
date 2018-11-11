@@ -23,6 +23,8 @@ protocol MoviesListPresenterDelegate {
     func prepareMovieDetailVC(movieDetailViewController: MovieDetailViewController)
     func showMyFavoritesMovies(managedContext: NSManagedObjectContext)
     func showPopularMovies()
+    func existPopularMoviesNextPage() -> Bool
+    func searchPopularMoviesNextPage()
 }
 
 
@@ -31,6 +33,7 @@ class MoviesListPresenter {
     private let movieService:MovieService
     weak private var view: MoviesListTableViewControllerDelegate?
     
+    internal var popularMoviesResponse:PopularMoviesResponseEntity?
     internal var arrMovies = [PopularMovieEntity]()
     internal var movieEntitySelected: PopularMovieEntity?
     
@@ -52,10 +55,11 @@ extension MoviesListPresenter: MoviesListPresenterDelegate {
     }
     
     func viewIsReady() {
-        movieService.getCurrentPopularMovies(completion: { (response) in
+        movieService.getCurrentPopularMovies(getPopularMoviesRequest: GetPopularMoviesRequest(nextPage: nil), completion: { (response) in
             switch response {
             case .sucess(let data):
-                self.arrMovies = data
+                self.popularMoviesResponse = data
+                self.arrMovies = data.results
                 DispatchQueue.main.async {
                     self.view?.reloadData()
                 }
@@ -139,10 +143,11 @@ extension MoviesListPresenter: MoviesListPresenterDelegate {
     }
     
     func showPopularMovies() {
-        movieService.getCurrentPopularMovies(completion: { (response) in
+        movieService.getCurrentPopularMovies(getPopularMoviesRequest: GetPopularMoviesRequest(nextPage: nil), completion: { (response) in
             switch response {
             case .sucess(let data):
-                self.arrMovies = data
+                self.popularMoviesResponse = data
+                self.arrMovies = data.results
                 DispatchQueue.main.async {
                     self.view?.changeTitle(title: "Popular Movies")
                     self.view?.reloadData()
@@ -151,6 +156,36 @@ extension MoviesListPresenter: MoviesListPresenterDelegate {
                 print(error)
             }
         })
+    }
+    
+    func existPopularMoviesNextPage() -> Bool {
+        if let actualPage = self.popularMoviesResponse?.page, let totalPages = self.popularMoviesResponse?.total_pages {
+            if actualPage < totalPages {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func searchPopularMoviesNextPage() {
+        if let actualPage = self.popularMoviesResponse?.page {
+            let nextPage = actualPage + 1
+            let nextPageCast = String(nextPage)
+            
+            movieService.getCurrentPopularMovies(getPopularMoviesRequest: GetPopularMoviesRequest(nextPage: nextPageCast)) { (response) in
+                switch response{
+                case .sucess(let data):
+                    self.popularMoviesResponse = data
+                    self.arrMovies = self.arrMovies + data.results
+                    DispatchQueue.main.async {
+                        self.view?.changeTitle(title: "Popular Movies")
+                        self.view?.reloadData()
+                    }
+                case .fail(let error):
+                    print(error)
+                }
+            }
+        }
     }
     
 }

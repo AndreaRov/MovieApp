@@ -89,6 +89,12 @@ class MoviesListTableViewController: UITableViewController {
             cellUnwrapped.setMovieDescription(description: presenter.getCellMovieDescription(indexPath: indexPath))
             let urlString = presenter.getCoverMovieImageURLString(indexPath: indexPath)
             cellUnwrapped.setDownloadedImageCover(URLString: urlString)
+            
+            let existNextPage = self.presenter.existPopularMoviesNextPage()
+            if existNextPage == true, indexPath.row == self.presenter.getNumberOfPopularMovies() / 2 {
+                self.presenter.searchPopularMoviesNextPage()
+            }
+            
             return cellUnwrapped
         }
         return tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath)
