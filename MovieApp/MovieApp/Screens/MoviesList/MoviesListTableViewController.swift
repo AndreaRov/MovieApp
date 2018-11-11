@@ -91,7 +91,7 @@ class MoviesListTableViewController: UITableViewController {
             cellUnwrapped.setDownloadedImageCover(URLString: urlString)
             
             let existNextPage = self.presenter.existPopularMoviesNextPage()
-            if existNextPage == true, indexPath.row == self.presenter.getNumberOfPopularMovies() / 2 {
+            if existNextPage == true, indexPath.row == self.presenter.getNumberOfPopularMovies() / 2, self.title == "Popular Movies" {
                 self.presenter.searchPopularMoviesNextPage()
             }
             
